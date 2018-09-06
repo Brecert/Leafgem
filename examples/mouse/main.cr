@@ -17,6 +17,8 @@ class Draggable < Leafgem::Object
   end
 
   def update
+    # pp Leafgem::Renderer.draw_offset_x
+
     # If Mouse.primary exists (and thus is active)
     if primary = Mouse.primary
       x = Mouse.position.not_nil!.x.to_f
