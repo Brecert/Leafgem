@@ -33,7 +33,11 @@ class Leafgem::Hitbox
   end
 
   def point_in?(x, y)
-    x >= @position.x && x <= @position.y + @w && y >= @position.y && y <= @position.y + @h
+    x >= @position.x && x <= @position.y + @size.x && y >= @position.y && y <= @position.y + @size.y
+  end
+
+  def point_in?(vec : Vec)
+    point_in? *vec.to_tuple
   end
 
   def box_collision_check(this, other, x, y)

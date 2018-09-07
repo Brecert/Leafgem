@@ -18,6 +18,15 @@ abstract class Vec
 
   {% end %}
 
+  def to_tuple
+    {@x, @y}
+  end
+
+  def each
+    yield @x
+    yield @y
+  end
+
   # NOTE: Returns a Vec2f because it can be .to_i, this is for consistency
   def to_relative
     rel_x = 0
@@ -31,6 +40,8 @@ abstract class Vec
 end
 
 class Vec2 < Vec
+  include Enumerable(Int32)
+
   property x : Int32
   property y : Int32
 
@@ -47,6 +58,8 @@ class Vec2 < Vec
 end
 
 class Vec2f < Vec
+  include Enumerable(Float64)
+
   property x : Float64
   property y : Float64
 

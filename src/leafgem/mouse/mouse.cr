@@ -25,6 +25,8 @@ module Leafgem::Mouse::Mouse
   end
 
   def update
+    pp "updating"
+
     @@buttons.each do |i, button|
       button.update
     end
@@ -48,6 +50,8 @@ module Leafgem::Mouse::Mouse
     if event.type.to_s.downcase.ends_with? "up"
       @@buttons.delete event.button
     end
+
+    pp @@buttons
   end
 
   # Enable or Disable the cursor
@@ -108,16 +112,29 @@ module Leafgem::Mouse::Mouse
 
   # Gets the primary button event if it exists
   def primary
+    @@buttons[1_u8]
+  end
+
+  def primary?
+    pp "primary"
     @@buttons[1_u8]?
   end
 
   # Gets the secondary button click event if it exists
   def secondary
+    @@buttons[3_u8]
+  end
+
+  def secondary?
     @@buttons[3_u8]?
   end
 
   # Gets the middle button click event if it exists
   def middle
+    @@buttons[2_u8]
+  end
+
+  def middle?
     @@buttons[2_u8]?
   end
 
@@ -129,4 +146,6 @@ module Leafgem::Mouse::Mouse
   def scroll
     @@scroll
   end
+
+  extend self
 end

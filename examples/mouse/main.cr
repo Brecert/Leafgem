@@ -17,45 +17,47 @@ class Draggable < Leafgem::Shapes::Rectangle
   end
 
   def update
-    if Mouse.scroll.up?
-      @size += 2
-    elsif Mouse.scroll.down?
-      @size -= 2
-    end
+    # if Mouse.scroll.up?
+    #   @size += 2
+    # elsif Mouse.scroll.down?
+    #   @size -= 2
+    # end
 
-    # If Mouse.primary exists (and thus is active)
-    if primary = Mouse.primary
-      x = Mouse.position.not_nil!.x.to_f
-      y = Mouse.position.not_nil!.y.to_f
-      if point_in?(x, y) && @dragging
-        Mouse.cursor = "pointer"
-      end
+    # # If Mouse.primary exists (and thus is active)
+    # if self.pressed?
+    #   x = Mouse.position.x.to_f
+    #   y = Mouse.position.y.to_f
 
-      # If it's been held
-      if primary.held? && @dragging
-        @fill_colour = {127, 33, 33, 255}
+    #   if point_in?(x, y) && @dragging
+    #     Mouse.cursor = "pointer"
+    #   end
 
-        # Get the positions
-        # Set self to mouse poition
-        @position.x = x + @offset_x
-        @position.y = y + @offset_y
-        # If it's the first tap
-      elsif primary.pressed?
-        # If click starts out in self
-        # So the rect of logic won't trigger if you move the mouse over it
-        @dragging = true if point_in? x, y
+    #   # If it's been held
+    #   if primary.held? && @dragging
+    #     @fill_colour = {127, 33, 33, 255}
 
-        # Offsets so it stays relatively positioned to where you clicked
-        @offset_x = @position.x - x
-        @offset_y = @position.y - y
-      end
-      # Update primary click
-      # primary.update
-    else
-      @fill_colour = {33, 33, 33, 255}
-      @dragging = false
-      Mouse.cursor = nil
-    end
+    #     # Get the positions
+    #     # Set self to mouse poition
+    #     @position.x = x + @offset_x
+    #     @position.y = y + @offset_y
+    #     # If it's the first tap
+    #   elsif primary.pressed?
+    #     # If click starts out in self
+    #     # So the rect of logic won't trigger if you move the mouse over it
+    #     @dragging = true if point_in? x, y
+
+    #     # Offsets so it stays relatively positioned to where you clicked
+    #     @offset_x = @position.x - x
+    #     @offset_y = @position.y - y
+    #   end
+    #   # Update primary click
+    #   # primary.update
+    # else
+    #   @fill_colour = {33, 33, 33, 255}
+    #   @dragging = false
+    #   Mouse.cursor = nil
+    # end
+    debug self.pressed?
   end
 
   def draw
