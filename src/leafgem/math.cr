@@ -37,6 +37,10 @@ abstract class Vec
     end
     self.class.new(rel_x, rel_y)
   end
+
+  def to_s
+    "x: #{@x}, y: #{@y}"
+  end
 end
 
 class Vec2 < Vec

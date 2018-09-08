@@ -32,6 +32,14 @@ class Leafgem::Hitbox
     return false
   end
 
+  def pressed?
+    if primary = Library::Mouse.primary?
+      point_in?(primary.position) && primary.pressed?
+    else
+      false
+    end
+  end
+
   def point_in?(x, y)
     x >= @position.x && x <= @position.y + @size.x && y >= @position.y && y <= @position.y + @size.y
   end

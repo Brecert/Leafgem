@@ -25,8 +25,6 @@ module Leafgem::Mouse::Mouse
   end
 
   def update
-    pp "updating"
-
     @@buttons.each do |i, button|
       button.update
     end
@@ -50,8 +48,6 @@ module Leafgem::Mouse::Mouse
     if event.type.to_s.downcase.ends_with? "up"
       @@buttons.delete event.button
     end
-
-    pp @@buttons
   end
 
   # Enable or Disable the cursor
@@ -116,7 +112,6 @@ module Leafgem::Mouse::Mouse
   end
 
   def primary?
-    pp "primary"
     @@buttons[1_u8]?
   end
 

@@ -17,6 +17,7 @@ class Draggable < Leafgem::Shapes::Rectangle
   end
 
   def update
+    update_hitbox
     # if Mouse.scroll.up?
     #   @size += 2
     # elsif Mouse.scroll.down?
@@ -57,7 +58,9 @@ class Draggable < Leafgem::Shapes::Rectangle
     #   @dragging = false
     #   Mouse.cursor = nil
     # end
-    debug self.pressed?
+    if pressed?
+      @position = Mouse.position.to_f
+    end
   end
 
   def draw
