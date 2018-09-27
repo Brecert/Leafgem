@@ -4,8 +4,7 @@ include Leafgem::Library
 class Draggable < Leafgem::Shapes::Rectangle
   def initialize
     super
-    @offset_x = 0_f64
-    @offset_y = 0_f64
+    @drag_offset = Vec2(Float64).new(0.0, 0.0)
     @fill_colour = {33, 33, 33, 255}
   end
 
@@ -16,18 +15,12 @@ class Draggable < Leafgem::Shapes::Rectangle
     @size.y = 32
   end
 
-  def update
-    if Mouse.scroll.up?
-      @size += 2
-    elsif Mouse.scroll.down?
-      @size -= 2
-    end
-
+  def drag_handler
     # If Mouse.primary exists (and thus is active)
     if primary = Mouse.primary
-      x = Mouse.pos.x.to_f
-      y = Mouse.pos.y.to_f
-      if point_in?(x, y) && @dragging
+      p = Mouse.pos.relative_to_world.to_f
+      debug hitbox.point_in? p
+      if hitbox.point_in?(p) && @dragging
         Mouse.cursor = "pointer"
       end
 
@@ -37,17 +30,15 @@ class Draggable < Leafgem::Shapes::Rectangle
 
         # Get the positions
         # Set self to mouse poition
-        @pos.x = x + @offset_x
-        @pos.y = y + @offset_y
+        @pos = @drag_offset + p
         # If it's the first tap
       elsif primary.pressed?
         # If click starts out in self
         # So the rect of logic won't trigger if you move the mouse over it
-        @dragging = true if point_in? x, y
+        @dragging = true if hitbox.point_in? p
 
         # Offsets so it stays relatively positioned to where you clicked
-        @offset_x = @pos.x - x
-        @offset_y = @pos.y - y
+        @drag_offset = @pos - Mouse.pos
       end
       # Update primary click
       # primary.update
@@ -56,6 +47,13 @@ class Draggable < Leafgem::Shapes::Rectangle
       @dragging = false
       Mouse.cursor = nil
     end
+  end
+
+  def update
+    debug Mouse.scroll.direction
+    @size += Mouse.scroll.direction.y
+
+    drag_handler
   end
 
   def draw

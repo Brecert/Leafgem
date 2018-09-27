@@ -32,6 +32,10 @@ class Leafgem::Hitbox
     return false
   end
 
+  def point_in?(vec : Vec2)
+    point_in? vec.x, vec.y
+  end
+
   def point_in?(x, y)
     x >= @pos.x && x <= @pos.y + @size.x && y >= @pos.y && y <= @pos.y + @size.y
   end
